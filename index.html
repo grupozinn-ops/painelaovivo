@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <title>Vendas ao vivo</title>
+  <meta name="theme-color" content="#0d0b0a">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Vendas">
+  <link rel="manifest" href="/manifest.webmanifest">
+  <link rel="icon" href="/icone.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/icone-180.png">
+  <link rel="preload" href="/fonts/archivo-latin-wdth-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <div class="app" id="app" hidden>
+    <header class="topo">
+      <div class="marca">
+        <span class="logo" aria-hidden="true">
+          <svg viewBox="0 0 32 32" width="32" height="32"><rect width="32" height="32" rx="8" fill="var(--accent)"/><path d="M6 18h5l3-8 4 13 3-7h5" fill="none" stroke="#1a0d05" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </span>
+        <div class="marca-txt">
+          <strong id="nome">Vendas ao vivo</strong>
+          <span id="dataHoje">&nbsp;</span>
+        </div>
+      </div>
+      <div class="status" id="status" data-estado="ok">
+        <span class="pulso" aria-hidden="true"></span>
+        <span id="statusTxt">Conectando</span>
+      </div>
+      <div class="relogio" id="relogio" aria-label="Hora atual">--:--</div>
+      <div class="acoes">
+        <button class="btn-icone" id="btnContas" type="button" title="Contas do Bling">
+          <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M4 20V8l5-3v15M9 20V4l11 4v12M3 20h18M12.5 10h1.5M16.5 10H18M12.5 13.5h1.5M16.5 13.5H18M12.5 17h1.5M16.5 17H18" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span class="sr">Contas do Bling</span>
+        </button>
+        <button class="btn-icone" id="btnSom" type="button" aria-pressed="false" title="Som a cada venda">
+          <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M6 16V11a6 6 0 1 1 12 0v5l1.5 2h-15z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M10 20.5a2 2 0 0 0 4 0" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path class="risco" d="M4 4l16 16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+          <span class="sr">Som a cada venda</span>
+        </button>
+        <button class="btn-icone" id="btnTela" type="button" title="Tela cheia">
+          <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span class="sr">Tela cheia</span>
+        </button>
+      </div>
+    </header>
+
+    <div class="aviso" id="aviso" hidden></div>
+
+    <section class="hero" aria-labelledby="hojeRot">
+      <div class="hero-principal">
+        <div class="rotulo" id="hojeRot">Vendido hoje</div>
+        <div class="valor-hero" id="hojeTotal" aria-live="polite">
+          <span class="moeda">R$</span><span class="inteiro">0</span><span class="cent">,00</span>
+        </div>
+        <dl class="hero-linha">
+          <div><dt>Pedidos</dt><dd id="hojePedidos">0</dd></div>
+          <div><dt>Ticket médio</dt><dd id="hojeTicket">R$ 0</dd></div>
+          <div><dt id="compRot">Ontem até agora</dt><dd><span id="compValor">R$ 0</span> <span class="delta" id="compDelta" hidden></span></dd></div>
+          <div><dt>Previsão do dia</dt><dd id="hojeEsperado">R$ 0</dd></div>
+        </dl>
+      </div>
+      <aside class="hero-empresas" id="empresas" aria-label="Vendas de hoje por empresa" hidden>
+        <div class="rotulo">Por empresa</div>
+        <ul class="lista-empresas" id="listaEmpresas"></ul>
+      </aside>
+    </section>
+
+    <section class="kpis" aria-label="Resumo do mês">
+      <article class="kpi">
+        <h2>Vendido no mês</h2>
+        <p class="kpi-valor" id="mesTotal">R$ 0</p>
+        <p class="kpi-nota" id="mesNota">&nbsp;</p>
+      </article>
+      <article class="kpi kpi-proj">
+        <h2>Projeção do mês</h2>
+        <p class="kpi-valor" id="mesProj">R$ 0</p>
+        <p class="kpi-nota" id="projNota">&nbsp;</p>
+        <div class="meta" id="meta" hidden>
+          <div class="meta-trilho"><span class="meta-feito" id="metaFeito"></span><span class="meta-proj" id="metaProj"></span></div>
+          <p class="kpi-nota" id="metaNota"></p>
+        </div>
+      </article>
+      <article class="kpi">
+        <h2>Ticket médio do mês</h2>
+        <p class="kpi-valor" id="mesTicket">R$ 0</p>
+        <p class="kpi-nota" id="ticketNota">&nbsp;</p>
+      </article>
+      <article class="kpi">
+        <h2>Pedidos no mês</h2>
+        <p class="kpi-valor" id="mesPedidos">0</p>
+        <p class="kpi-nota" id="pedidosNota">&nbsp;</p>
+      </article>
+    </section>
+
+    <section class="card ritmo">
+      <header class="card-topo">
+        <h2>Ritmo de hoje</h2>
+        <ul class="legenda" id="legRitmo">
+          <li><span class="chave chave-hoje"></span>Hoje</li>
+          <li id="legOntem"><span class="chave chave-ontem"></span>Ontem</li>
+          <li><span class="chave chave-prev"></span>Previsão</li>
+        </ul>
+      </header>
+      <div class="graf" id="grafRitmo" role="img" aria-label="Vendas acumuladas de hoje por hora, comparadas com ontem"></div>
+    </section>
+
+    <section class="card canais">
+      <header class="card-topo">
+        <h2>Canais que mais vendem</h2>
+        <div class="seg" role="tablist" aria-label="Período dos canais">
+          <button type="button" role="tab" id="segMes" aria-selected="true">Mês</button>
+          <button type="button" role="tab" id="segHoje" aria-selected="false">Hoje</button>
+        </div>
+      </header>
+      <ol class="lista-canais" id="listaCanais"></ol>
+    </section>
+
+    <section class="card dias">
+      <header class="card-topo">
+        <h2>Vendas por dia</h2>
+        <ul class="legenda">
+          <li><span class="chave chave-passado"></span>Vendido</li>
+          <li><span class="chave chave-hoje"></span>Hoje</li>
+          <li><span class="chave chave-ghost"></span>Projeção</li>
+          <li id="legMedia" hidden><span class="chave chave-media"></span><span id="legMediaTxt">Média</span></li>
+        </ul>
+      </header>
+      <div class="graf" id="grafDias" role="img" aria-label="Vendas de cada dia do mês e projeção dos dias restantes"></div>
+    </section>
+
+    <section class="card ultimos">
+      <header class="card-topo">
+        <h2>Últimas vendas</h2>
+        <span class="card-extra" id="ultimosNota"></span>
+      </header>
+      <ul class="lista-ultimos" id="listaUltimos"></ul>
+    </section>
+  </div>
+
+  <!-- Telas de entrada -->
+  <div class="tela" id="telaSenha" hidden>
+    <form class="tela-caixa" id="formSenha">
+      <h1>Vendas ao vivo</h1>
+      <p>Digite a senha do painel. Ela fica salva neste aparelho.</p>
+      <label for="campoSenha">Senha</label>
+      <input id="campoSenha" type="password" autocomplete="current-password" required>
+      <p class="erro" id="erroSenha" hidden>Senha incorreta. Confira a variável PAINEL_SENHA.</p>
+      <button type="submit" class="btn">Entrar</button>
+    </form>
+  </div>
+
+  <div class="tela" id="telaConectar" hidden>
+    <div class="tela-caixa">
+      <h1>Conecte o Bling</h1>
+      <p>Autorize o painel a ler seus pedidos de venda. Você entra na sua conta do Bling e volta pra cá.</p>
+      <a class="btn" id="btnConectar" href="#">Conectar Bling</a>
+    </div>
+  </div>
+
+  <div class="tela" id="telaCarregando" hidden>
+    <div class="tela-caixa">
+      <div class="spinner" aria-hidden="true"></div>
+      <h1 id="carregTitulo">Puxando seus pedidos</h1>
+      <p id="carregTexto">Lendo os pedidos do mês no Bling. Na primeira vez leva alguns segundos.</p>
+    </div>
+  </div>
+
+  <div class="tela" id="telaErro" hidden>
+    <div class="tela-caixa">
+      <h1 id="erroTitulo">Algo não está configurado</h1>
+      <p id="erroTexto"></p>
+    </div>
+  </div>
+
+  <div class="modal" id="modalContas" role="dialog" aria-modal="true" aria-labelledby="contasTitulo" hidden>
+    <div class="modal-caixa">
+      <header class="modal-topo">
+        <h2 id="contasTitulo">Contas do Bling</h2>
+        <button class="btn-icone" id="fecharContas" type="button" title="Fechar">
+          <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+          <span class="sr">Fechar</span>
+        </button>
+      </header>
+      <p class="modal-texto">O painel soma as vendas de todas as contas abaixo.</p>
+      <ul class="lista-contas" id="listaContas"></ul>
+      <div class="nova-conta" id="novaConta">
+        <a class="btn" id="btnNovaConta" href="#">Conectar outra conta</a>
+        <p class="modal-dica">Antes de clicar, saia do Bling neste navegador (ou abra o painel numa janela anônima) e entre com o login da outra empresa. Se ela tiver um app próprio no Bling, cadastre também <code>BLING_CLIENT_ID_<span id="numNova">2</span></code> e <code>BLING_CLIENT_SECRET_<span id="numNova2">2</span></code>.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="toasts" id="toasts" aria-live="polite"></div>
+  <div class="dica" id="dica" role="tooltip" hidden></div>
+
+  <script type="module" src="/app.js"></script>
+</body>
+</html>

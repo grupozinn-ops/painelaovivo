@@ -1,0 +1,25 @@
+LOGOS DOS MARKETPLACES
+
+Coloque aqui o arquivo oficial de logo de cada canal (pegue no portal do vendedor
+ou no kit de marca de cada marketplace). Use .png (ou .svg).
+O ideal é um ícone quadrado (tipo ícone de app), de 128x128 px pra cima.
+
+Nome do arquivo (sem a extensão) de cada canal:
+
+  mercadolivre     Mercado Livre
+  shopee           Shopee
+  amazon           Amazon
+  magalu           Magalu
+  tiktokshop       TikTok Shop
+  madeiramadeira   MadeiraMadeira
+  shein            Shein
+  americanas       Americanas
+  casasbahia       Casas Bahia
+  lojavirtual      Loja virtual (Nuvemshop, Shopify, Tray...)
+  vendadireta      Venda direta (pedido sem loja no Bling)
+  loja-12345       Qualquer outro canal: use o ID da loja no Bling
+
+Exemplo: public/logos/mercadolivre.png
+
+Enquanto o arquivo não existir, o painel mostra a sigla do canal na cor dele.
+Depois de colocar os arquivos, faça o deploy de novo (ou só recarregue, se roda local).
