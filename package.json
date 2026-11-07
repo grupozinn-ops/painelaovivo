@@ -1,0 +1,12 @@
+{
+  "name": "painel-vendas-bling",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Painel de vendas ao vivo dos marketplaces, puxando os pedidos do Bling ERP (API v3)",
+  "type": "module",
+  "scripts": {
+    "dev": "node server.js",
+    "start": "node server.js",
+    "demo": "node mock/demo.js"
+  }
+}
